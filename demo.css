@@ -12,6 +12,7 @@
 
 .container #searchresults > img {
 	cursor: pointer;
+	margin: 2px;
 }
 
 .container #searchresults > img.selected {

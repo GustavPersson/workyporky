@@ -31,12 +31,22 @@ function toggleSelection(image) {
   console.log(clickedImage);
 }
 
+function createGallery() {
+  document.querySelectorAll('.selected');
+}
+
 window.addEventListener("load", function () {
   document.getElementById("flickrsearch").addEventListener("submit", function (event) {
     event.preventDefault();
     event.stopPropagation();
 
     getPictures(this.children.searchstring.value);
+  });
+  document.getElementById("opengallery").addEventListener("click", function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    createGallery();
   });
 });
 
