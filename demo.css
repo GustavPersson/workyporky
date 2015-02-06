@@ -7,14 +7,20 @@
 	display: flex;
 	flex-direction: row;
 	flex: 0 0 auto;
-	flex-wrap: wrap;	
+	flex-wrap: wrap;
 }
 
 .container #searchresults > img {
 	cursor: pointer;
 	margin: 2px;
+	height: 75px;
+	width: 75px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .container #searchresults > img.selected {
 	border: 2px solid blue;
+
 }
