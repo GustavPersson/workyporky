@@ -27,12 +27,21 @@ function handleResponse(responseJson) {
 function toggleSelection(image) {
   var clickedImage = window.photos[image.dataset.photoIndex];
   image.classList.toggle("selected");
-
-  console.log(clickedImage);
 }
 
 function createGallery() {
-  document.querySelectorAll('.selected');
+  var selectedImages = document.querySelectorAll('.selected'),
+  photo,
+  photoIndex,
+  out = '';
+
+  for(i = 0; i < selectedImages.length; i++) {
+    photoIndex = selectedImages[i].dataset.photoIndex;
+    photo = window.photos[photoIndex];
+    out += '<img data-photo-index="' + i + '" src="https://farm' + photo.farm + '.staticflickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '.jpg"></img>';
+    //print more info about image too
+  }
+  document.getElementById("galleryarea").innerHTML = out;
 }
 
 window.addEventListener("load", function () {
@@ -42,6 +51,7 @@ window.addEventListener("load", function () {
 
     getPictures(this.children.searchstring.value);
   });
+
   document.getElementById("opengallery").addEventListener("click", function (event) {
     event.preventDefault();
     event.stopPropagation();
@@ -49,8 +59,3 @@ window.addEventListener("load", function () {
     createGallery();
   });
 });
-
-
-//when click on create album link get all with class .selected
-//get big pictures of those
-//display somehow
