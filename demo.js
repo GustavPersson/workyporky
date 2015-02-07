@@ -1,3 +1,7 @@
+
+/**
+* Gets pictures from the flickr api matching the search string provided
+*/
 function getPictures(searchString) {
   var xmlhttp = new XMLHttpRequest();
   var url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=b54580f369a7eeebecb2004dc429d08f&text=" + searchString + "&format=json&nojsoncallback=1";
@@ -12,6 +16,9 @@ function getPictures(searchString) {
   xmlhttp.send();
 }
 
+/**
+* Handles the response from getPictures. Parses json, creates html, and inserts it into the page.
+**/
 function handleResponse(responseJson) {
   var out = "",
     i,
@@ -24,11 +31,16 @@ function handleResponse(responseJson) {
   document.getElementById("searchresults").innerHTML = out;
 }
 
+/*
+* Toggle the .selected-class on the given element
+*/
 function toggleSelection(image) {
-  var clickedImage = window.photos[image.dataset.photoIndex];
   image.classList.toggle("selected");
 }
 
+/**
+* Gets the user info for the given userId from the flickr api, parses the response, creates a credit link and inserts the generated html.
+**/
 function getUserInfo(userId, index) {
   var xmlhttp = new XMLHttpRequest(),
     targetElem,
@@ -46,6 +58,10 @@ function getUserInfo(userId, index) {
   xmlhttp.send();
 }
 
+/*
+* Creates the gallery area by getting all selected images, reading their data, generating full size img display and links back to user page
+* by calling getUserInfo.
+*/
 function createGallery() {
   var selectedImages = document.querySelectorAll('.selected'),
   photo,
@@ -65,6 +81,7 @@ function createGallery() {
 }
 
 window.addEventListener("load", function () {
+  //Event listener for search form submit
   document.getElementById("flickrsearch").addEventListener("submit", function (event) {
     event.preventDefault();
     event.stopPropagation();
@@ -72,6 +89,7 @@ window.addEventListener("load", function () {
     getPictures(this.children.searchstring.value);
   });
 
+  //Event listener for click on gallery button
   document.getElementById("opengallery").addEventListener("click", function (event) {
     event.preventDefault();
     event.stopPropagation();
