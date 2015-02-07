@@ -38,7 +38,10 @@ function createGallery() {
   for(i = 0; i < selectedImages.length; i++) {
     photoIndex = selectedImages[i].dataset.photoIndex;
     photo = window.photos[photoIndex];
+    out += '<h3>' + photo.title + '</h3>';
+    out += '<a href="https://www.flickr.com/people/' + photo.owner + '/">';
     out += '<img data-photo-index="' + i + '" src="https://farm' + photo.farm + '.staticflickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '.jpg"></img>';
+    out += '</a>';
     //print more info about image too
   }
   document.getElementById("galleryarea").innerHTML = out;
