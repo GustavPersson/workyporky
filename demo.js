@@ -29,6 +29,23 @@ function toggleSelection(image) {
   image.classList.toggle("selected");
 }
 
+function getUserInfo(userId, index) {
+  var xmlhttp = new XMLHttpRequest(),
+    targetElem,
+    out = '',
+    url = "https://api.flickr.com/services/rest/?method=flickr.people.getInfo&api_key=b54580f369a7eeebecb2004dc429d08f&user_id=" + userId + "&format=json&nojsoncallback=1"
+  xmlhttp.onreadystatechange = function() {
+      if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        var responseJson = JSON.parse(xmlhttp.responseText);
+        targetElem = document.querySelector('a[data-photo-index="' + index +'"]');
+        out = '<span>Image by ' + responseJson.person.username._content + ' on flickr</span>';
+        targetElem.innerHTML = out;
+      }
+  }
+  xmlhttp.open("GET", url, true);
+  xmlhttp.send();
+}
+
 function createGallery() {
   var selectedImages = document.querySelectorAll('.selected'),
   photo,
@@ -39,10 +56,10 @@ function createGallery() {
     photoIndex = selectedImages[i].dataset.photoIndex;
     photo = window.photos[photoIndex];
     out += '<h3>' + photo.title + '</h3>';
-    out += '<a href="https://www.flickr.com/people/' + photo.owner + '/">';
-    out += '<img data-photo-index="' + i + '" src="https://farm' + photo.farm + '.staticflickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '.jpg"></img>';
+    out += '<a class="owner" data-photo-index=' + i + ' href="https://www.flickr.com/people/' + photo.owner + '/">';
+    getUserInfo(photo.owner, i);
     out += '</a>';
-    //print more info about image too
+    out += '<img data-photo-index="' + i + '" src="https://farm' + photo.farm + '.staticflickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '.jpg"></img>';
   }
   document.getElementById("galleryarea").innerHTML = out;
 }
